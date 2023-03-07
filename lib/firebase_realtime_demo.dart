@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseRealtimeDemoScreen extends StatelessWidget {
 
@@ -21,48 +21,59 @@ class FirebaseRealtimeDemoScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
 
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Create Data'),
-                  color: Colors.redAccent,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    // elevation: 5,
+                    // padding: const EdgeInsets.all(12.0),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
                   onPressed: () {
                     createData();
                   },
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                 ),
                 const SizedBox(height: 8,),
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Read/View Data'),
-                  color: Colors.redAccent,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    // elevation: 5,
+                    // padding: const EdgeInsets.all(12.0),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
 
                   onPressed: () async {
                     await readData();
                   },
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-
                 ),
                 const SizedBox(height: 8,),
 
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Update Data'),
-                  color: Colors.redAccent,
-
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    // elevation: 5,
+                    // padding: const EdgeInsets.all(12.0),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
                   onPressed: () {
                     updateData();
                   },
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-
                 ),
                 const SizedBox(height: 8,),
 
-                RaisedButton(
+                ElevatedButton(
                   child: const Text('Delete Data'),
-                  color: Colors.redAccent,
-
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    // elevation: 5,
+                    // padding: const EdgeInsets.all(12.0),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
                   onPressed: () {
                     deleteData();
                   },
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-
                 ),
               ],
             ),

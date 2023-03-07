@@ -1,15 +1,58 @@
+import 'package:desktop_window/desktop_window.dart';
+import 'package:ffd/custom/device_platform/device_platform.dart';
 import 'package:ffd/firebase_service.dart';
+import 'package:ffd/my_app.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as auth;
 import 'package:flutter/material.dart';
+
+import 'custom/oauth/providers/apple_provider.dart';
+import 'custom/oauth/providers/facebook_provider.dart';
+import 'custom/oauth/providers/google_provider.dart';
+import 'custom/oauth/providers/twitter_provider.dart';
+
+Future setDesktopWindow() async {
+  await DesktopWindow.setMinWindowSize(const Size(400, 400));
+  await DesktopWindow.setWindowSize(const Size(1300, 900));
+}
+
+Future setUpFirebaseAuth() async{
+  if (FirebaseAuth.instance.currentUser == null) {
+    await FirebaseAuth.instance.signInAnonymously();
+  }
+  auth.FirebaseUIAuth.configureProviders([
+    auth.EmailAuthProvider(),
+   // emailLinkProviderConfig,
+    auth.PhoneAuthProvider(),
+    GoogleProvider(clientId: 'GOOGLE_CLIENT_ID'),
+    AppleProvider(),
+    FacebookProvider(clientId: 'FACEBOOK_CLIENT_ID'),
+    TwitterProvider(
+      apiKey: 'TWITTER_API_KEY',
+      apiSecretKey: 'TWITTER_API_SECRET_KEY',
+      redirectUri: 'TWITTER_REDIRECT_URI',
+    ),
+  ]);
+}
 
 Future<void> main() async {
   //await SharedService().initializeSPService();
   await FirebaseService.initializeFirebase();
-  final RemoteMessage? message = await FirebaseService.firebaseMessaging.getInitialMessage();
-  runApp(const MyApp());
+  final RemoteMessage? remoteMessage = await FirebaseService.firebaseMessaging.getInitialMessage();
+  print('remoteMessage>> $remoteMessage');
+  //if (remoteMessage != null) {
+    //utilize remoteMessage anywhere into the app
+ // }
+  print('DevicePlatform.isDesktop>> ${DevicePlatform.isDesktop}');
+  if (DevicePlatform.isDesktop) {
+    await setDesktopWindow();
+  }
+
+  runApp(MyApp(remoteMessage: remoteMessage));
 }
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -117,4 +160,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
+}*/
